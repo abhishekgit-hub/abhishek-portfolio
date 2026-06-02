@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Abhishek Chaudhary — Computer Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --surface2: #16161f;
+      --border: #1e1e2e;
+      --accent: #7c6af7;
+      --accent2: #f97316;
+      --accent3: #22d3ee;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --tag-bg: #1a1a28;
+      --radius: 12px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── NAVBAR ── */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(10,10,15,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      transition: all 0.3s;
+      border-radius: 2px;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 61px;
+      left: 0;
+      width: 100%;
+      background: rgba(10,10,15,0.97);
+      backdrop-filter: blur(20px);
+      z-index: 99;
+      padding: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-menu.open { display: block; }
+
+    .mobile-menu a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover { color: var(--text); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 40px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(124,106,247,0.12) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-30%, -50%);
+      pointer-events: none;
+    }
+
+    .hero-glow2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(34,211,238,0.06) 0%, transparent 70%);
+      top: 20%;
+      left: 10%;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 11px;
+      color: var(--accent3);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent3);
+      border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(42px, 8vw, 90px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+      animation: fadeUp 0.6s ease 0.1s both;
+    }
+
+    .hero-name .line2 {
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(232,232,240,0.3);
+    }
+
+    .hero-title {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      font-size: clamp(18px, 3vw, 26px);
+      color: var(--muted);
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease 0.2s both;
+    }
+
+    .hero-title span { color: var(--accent); font-style: normal; }
+
+    .hero-desc {
+      max-width: 560px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 40px;
+      animation: fadeUp 0.6s ease 0.3s both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      animation: fadeUp 0.6s ease 0.4s both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: #6b59e8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(124,106,247,0.35);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      padding: 12px 24px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 13px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .hero-socials {
+      display: flex;
+      gap: 16px;
+      margin-top: 48px;
+      animation: fadeUp 0.6s ease 0.5s both;
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      transition: color 0.2s;
+    }
+
+    .social-link:hover { color: var(--accent3); }
+
+    .social-link svg { width: 16px; height: 16px; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTION COMMONS ── */
+    section {
+      padding: 80px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 48px;
+      line-height: 1.1;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: 1100px;
+      margin: 0 40px;
+    }
+
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .about-text p {
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.9;
+    }
+
+    .about-text p strong {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: border-color 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--accent); }
+
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .interest-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .tag {
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--accent3);
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: none; }
+
+    .skills-wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+
+    .skill-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      text-align: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      transition: all 0.2s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .skill-pill::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(124,106,247,0.08), transparent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .skill-pill:hover {
+      border-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .skill-pill:hover::before { opacity: 1; }
+
+    .skill-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: all 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .project-card:hover {
+      border-color: rgba(124,106,247,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+
+    .project-card:hover::after { transform: scaleX(1); }
+
+    .project-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 16px;
+    }
+
+    .project-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .project-links { display: flex; gap: 8px; }
+
+    .project-link {
+      color: var(--muted);
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+
+    .project-link:hover { color: var(--accent3); }
+
+    .project-link svg { width: 16px; height: 16px; }
+
+    .project-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .project-tag {
+      font-size: 10px;
+      padding: 3px 10px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* ── EDUCATION ── */
+    .edu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+
+    .edu-card:hover { border-color: var(--accent); }
+
+    .edu-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .edu-degree {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .edu-school {
+      color: var(--accent);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .edu-period {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+    }
+
+    .edu-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(34,211,238,0.1);
+      border: 1px solid rgba(34,211,238,0.2);
+      color: var(--accent3);
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: 11px;
+      margin-top: 12px;
+    }
+
+    /* ── POSTS ── */
+    #posts { padding-top: 80px; }
+
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .post-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+    }
+
+    .post-card:hover {
+      border-color: rgba(249,115,22,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+
+    .post-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .post-category {
+      font-size: 10px;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: rgba(249,115,22,0.1);
+      border: 1px solid rgba(249,115,22,0.2);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    .post-date {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .post-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .post-excerpt {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .post-read-more {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent3);
+      font-size: 11px;
+      margin-top: 16px;
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+
+    .post-card:hover .post-read-more { gap: 10px; }
+
+    /* ── POST MODAL ── */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 200;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 60px 20px 40px;
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+      overflow-y: auto;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 680px;
+      width: 100%;
+      transform: translateY(20px);
+      transition: transform 0.3s;
+      position: relative;
+    }
+
+    .modal-overlay.open .modal { transform: translateY(0); }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+
+    .modal-close:hover { color: var(--text); border-color: var(--accent); }
+
+    .modal-category {
+      font-size: 11px;
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .modal-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .modal-date {
+      color: var(--muted);
+      font-size: 11px;
+      margin-bottom: 28px;
+    }
+
+    .modal-body {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .modal-body p { margin-bottom: 16px; }
+
+    /* ── CONTACT ── */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .contact-info p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+
+    .contact-link-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 13px;
+      padding: 12px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: all 0.2s;
+    }
+
+    .contact-link-item:hover {
+      color: var(--text);
+      border-color: var(--accent);
+    }
+
+    .contact-link-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      #hero { padding: 90px 20px 50px; }
+      section { padding: 60px 20px; }
+      .divider { margin: 0 20px; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .contact-wrapper { grid-template-columns: 1fr; }
+
+      .hero-name { letter-spacing: -1.5px; }
+
+      footer { padding: 24px 20px; flex-direction: column; text-align: center; }
+
+      .edu-card { flex-direction: column; gap: 16px; padding: 24px; }
+
+      .modal { padding: 28px 20px; }
+      .modal-overlay { padding: 40px 16px 24px; }
+    }
+
+    @media (max-width: 480px) {
+      .skills-wrapper { grid-template-columns: repeat(2, 1fr); }
+      .about-stats { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#hero" class="nav-logo">AC<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#posts">Posts</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#skills" onclick="toggleMenu()">Skills</a>
+  <a href="#projects" onclick="toggleMenu()">Projects</a>
+  <a href="#education" onclick="toggleMenu()">Education</a>
+  <a href="#posts" onclick="toggleMenu()">Posts</a>
+  <a href="#contact" onclick="toggleMenu()">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Available for internships & collabs</div>
+    <h1 class="hero-name">
+      Abhishek<br>
+      <span class="line2">Chaudhary</span>
+    </h1>
+    <p class="hero-title">Computer Engineer — <span>Building AI-powered things</span></p>
+    <p class="hero-desc">
+      4th year B.E. student at Purbanchal University, Nepal. I build web applications,
+      experiment with AI, and love crafting bots that actually solve problems.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        View Projects
+      </a>
+      <a href="#contact" class="btn-ghost">Get in Touch</a>
+    </div>
+    <div class="hero-socials">
+      <a href="https://github.com/abhishekgit-hub" target="_blank" class="social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:abhishekfiction369@gmail.com" class="social-link">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        Email
+      </a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About Me</div>
+  <h2 class="section-title reveal">Who I Am</h2>
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>
+        Hey! I'm <strong>Abhishek Chaudhary</strong>, a 4th year Computer Engineering student at
+        <strong>Purbanchal University, Nepal</strong>. I'm passionate about building things that
+        live on the internet — from full-stack web apps to AI-powered tools.
+      </p>
+      <p>
+        My focus is on <strong>AI, bots, and web development</strong>. I love the idea of making
+        software that feels intelligent and actually helps people. Whether it's a chat widget,
+        an automation bot, or a clean REST API — I enjoy the craft of building it right.
+      </p>
+      <p>
+        Outside of code, I like staying up with the latest in AI research, tinkering with
+        new frameworks, and occasionally writing posts about tech and general topics.
+      </p>
+      <div class="interest-tags">
+        <span class="tag">🤖 Artificial Intelligence</span>
+        <span class="tag">🕸️ Web Development</span>
+        <span class="tag">🤖 Bots & Automation</span>
+        <span class="tag">🛠️ Open Source</span>
+      </div>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-card">
+        <div class="stat-number">4th</div>
+        <div class="stat-label">Year of B.E.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">7+</div>
+        <div class="stat-label">Tech Skills</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">PU</div>
+        <div class="stat-label">Purbanchal Univ.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">NP</div>
+        <div class="stat-label">Based in Nepal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Tech Stack</div>
+  <h2 class="section-title reveal">Skills</h2>
+  <div class="skills-wrapper reveal">
+    <div class="skill-pill"><span class="skill-icon">🟢</span>Node.js</div>
+    <div class="skill-pill"><span class="skill-icon">⚛️</span>React</div>
+    <div class="skill-pill"><span class="skill-icon">🐍</span>Python</div>
+    <div class="skill-pill"><span class="skill-icon">⚙️</span>C</div>
+    <div class="skill-pill"><span class="skill-icon">➕</span>C++</div>
+    <div class="skill-pill"><span class="skill-icon">🍃</span>MongoDB</div>
+    <div class="skill-pill"><span class="skill-icon">🚂</span>Express.js</div>
+    <div class="skill-pill"><span class="skill-icon">🌐</span>REST APIs</div>
+    <div class="skill-pill"><span class="skill-icon">🤖</span>AI / LLMs</div>
+    <div class="skill-pill"><span class="skill-icon">🐙</span>Git</div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Work</div>
+  <h2 class="section-title reveal">Projects</h2>
+  <div class="projects-grid">
+
+    <div class="project-card reveal">
+      <div class="project-card-header">
+        <div class="project-icon">🤖</div>
+        <div class="project-links">
+          <a class="project-link" href="https://github.com/abhishekgit-hub/embedai-saas" target="_blank" title="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+          </a>
+        </div>
+      </div>
+      <h3 class="project-name">EmbedAI SaaS</h3>
+      <p class="project-desc">
+        Plug-and-Play AI Chat Assistant and Widget for any business website —
+        powered by Google Gemini. Businesses can embed an intelligent chatbot
+        with zero backend setup on their end.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Node.js</span>
+        <span class="project-tag">React</span>
+        <span class="project-tag">Gemini AI</span>
+        <span class="project-tag">SaaS</span>
+        <span class="project-tag">MongoDB</span>
+      </div>
+    </div>
+
+    <!-- Placeholder card — you can update this -->
+    <div class="project-card reveal">
+      <div class="project-card-header">
+        <div class="project-icon">🌐</div>
+        <div class="project-links">
+          <a class="project-link" href="https://github.com/abhishekgit-hub" target="_blank" title="GitHub">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+          </a>
+        </div>
+      </div>
+      <h3 class="project-name">More on GitHub →</h3>
+      <p class="project-desc">
+        Check out my GitHub profile for more projects, experiments, and open-source
+        contributions. I'm always building something new.
+      </p>
+      <div class="project-tags">
+        <span class="project-tag">Open Source</span>
+        <span class="project-tag">Experiments</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Background</div>
+  <h2 class="section-title reveal">Education</h2>
+  <div class="reveal">
+    <div class="edu-card">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <div class="edu-degree">Bachelor of Engineering — Computer Engineering</div>
+        <div class="edu-school">Purbanchal University (PU), Nepal</div>
+        <div class="edu-period">2021 — Present &nbsp;·&nbsp; Currently in 4th Year</div>
+        <div class="edu-badge">
+          <span style="width:6px;height:6px;background:var(--accent3);border-radius:50%;display:inline-block;"></span>
+          Currently Enrolled
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- POSTS -->
+<section id="posts">
+  <div class="section-label">Blog</div>
+  <h2 class="section-title reveal">Posts</h2>
+  <div class="posts-grid" id="postsGrid">
+
+    <div class="post-card reveal" onclick="openPost(0)">
+      <div class="post-meta">
+        <span class="post-category">AI</span>
+        <span class="post-date">May 2025</span>
+      </div>
+      <h3 class="post-title">Why Google Gemini is quietly becoming a developer's best friend</h3>
+      <p class="post-excerpt">After building EmbedAI with the Gemini API, here's what surprised me about working with Google's AI platform day-to-day...</p>
+      <span class="post-read-more">Read more →</span>
+    </div>
+
+    <div class="post-card reveal" onclick="openPost(1)">
+      <div class="post-meta">
+        <span class="post-category">Tech News</span>
+        <span class="post-date">Apr 2025</span>
+      </div>
+      <h3 class="post-title">The rise of AI agents: what it means for developers like us</h3>
+      <p class="post-excerpt">AI agents are everywhere now. But as a developer, the question isn't "what are they" — it's "what can I build with them?"...</p>
+      <span class="post-read-more">Read more →</span>
+    </div>
+
+    <div class="post-card reveal" onclick="openPost(2)">
+      <div class="post-meta">
+        <span class="post-category">General</span>
+        <span class="post-date">Mar 2025</span>
+      </div>
+      <h3 class="post-title">Learning to code in Nepal: resources that actually helped me</h3>
+      <p class="post-excerpt">Being a CS student in Nepal has its challenges. Here are the resources, communities, and habits that genuinely made a difference...</p>
+      <span class="post-read-more">Read more →</span>
+    </div>
+
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Say Hello</div>
+  <h2 class="section-title reveal">Contact</h2>
+  <div class="contact-wrapper reveal">
+    <div class="contact-info">
+      <h3>Let's build something together.</h3>
+      <p>
+        I'm open to internship opportunities, collaboration on interesting projects,
+        or just a good conversation about AI and tech. Feel free to reach out any time.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:abhishekfiction369@gmail.com" class="contact-link-item">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          abhishekfiction369@gmail.com
+        </a>
+        <a href="https://github.com/abhishekgit-hub" target="_blank" class="contact-link-item">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12"/></svg>
+          github.com/abhishekgit-hub
+        </a>
+      </div>
+    </div>
+    <div class="reveal" style="background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px;">
+      <p style="font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 12px;">Quick note</p>
+      <p style="color: var(--muted); font-size: 13px; line-height: 1.8;">
+        I'm currently a 4th year student actively looking for internship opportunities
+        in <span style="color: var(--accent3);">AI/ML, full-stack development,</span> or
+        <span style="color: var(--accent3);">backend engineering.</span>
+        I respond to all emails within 24–48 hours.
+      </p>
+      <a href="mailto:abhishekfiction369@gmail.com" class="btn-primary" style="margin-top: 20px; display: inline-flex;">
+        Send an Email →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 Abhishek Chaudhary — Built with ❤️ from Nepal 🇳🇵</span>
+  <span>
+    <a href="https://github.com/abhishekgit-hub" target="_blank">GitHub</a>
+    &nbsp;·&nbsp;
+    <a href="mailto:abhishekfiction369@gmail.com">Email</a>
+  </span>
+</footer>
+
+<!-- POST MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closePost()">✕</button>
+    <div class="modal-category" id="modalCategory"></div>
+    <h2 class="modal-title" id="modalTitle"></h2>
+    <div class="modal-date" id="modalDate"></div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+  // ── POSTS DATA ──
+  const posts = [
+    {
+      category: "AI",
+      date: "May 2025",
+      title: "Why Google Gemini is quietly becoming a developer's best friend",
+      body: `
+        <p>After spending weeks building EmbedAI — a plug-and-play AI chat widget powered by Google Gemini — I came away with a surprisingly strong appreciation for Gemini's developer experience.</p>
+        <p>Most of the AI buzz still centers around OpenAI's GPT series, but Gemini has been quietly improving. The API is clean, the rate limits on the free tier are generous for prototyping, and the multimodal capabilities are genuinely impressive once you start using them.</p>
+        <p>What stood out most for me was the context window. For a chatbot use case, being able to pass large amounts of context about a business — their FAQs, product info, tone of voice — without worrying about hitting a limit was a huge deal.</p>
+        <p>If you're a developer building AI-integrated products and haven't tried Gemini yet, I'd genuinely recommend giving it a shot. It's especially useful if you're already in the Google Cloud ecosystem.</p>
+      `
+    },
+    {
+      category: "Tech News",
+      date: "Apr 2025",
+      title: "The rise of AI agents: what it means for developers like us",
+      body: `
+        <p>AI agents are everywhere in 2025. Every week there's a new framework, a new "autonomous agent" demo, and a new think-piece about whether agents will replace developers.</p>
+        <p>Here's my take as someone building with AI daily: agents are a tool, not a replacement. And right now, they're a really exciting tool.</p>
+        <p>The most interesting shift I see is how agents are changing what it means to write software. Instead of writing code that does a thing, you're writing prompts and orchestration logic that tells an AI how to do a thing. The skill set is evolving.</p>
+        <p>For developers interested in staying ahead: start experimenting with agent frameworks like LangChain, AutoGen, or even just the raw function-calling APIs from OpenAI and Gemini. Build small, break things, learn fast. That's still the best strategy.</p>
+      `
+    },
+    {
+      category: "General",
+      date: "Mar 2025",
+      title: "Learning to code in Nepal: resources that actually helped me",
+      body: `
+        <p>Being a computer engineering student in Nepal comes with a unique set of challenges. Slow internet on bad days, fewer local communities around cutting-edge tech, and a curriculum that sometimes lags behind industry trends.</p>
+        <p>But honestly? It's also made me resourceful. Here's what actually helped me level up:</p>
+        <p><strong>YouTube above everything.</strong> Fireship, Traversy Media, The Primeagen — these channels taught me more practical web dev than most textbooks. Free, fast, and current.</p>
+        <p><strong>Build something real.</strong> The biggest leap I made was building EmbedAI. Not a tutorial project — a real product. The problems you hit when building for production are different from anything a course will show you.</p>
+        <p><strong>GitHub is your portfolio.</strong> Start committing code early, even if it's messy. Employers and collaborators look at your GitHub before your CV.</p>
+        <p>If you're a student in Nepal (or anywhere with limited local resources), don't let that be your excuse. The internet is a great equalizer. Use it.</p>
+      `
+    }
+  ];
+
+  function openPost(index) {
+    const post = posts[index];
+    document.getElementById('modalCategory').textContent = post.category;
+    document.getElementById('modalTitle').textContent = post.title;
+    document.getElementById('modalDate').textContent = post.date;
+    document.getElementById('modalBody').innerHTML = post.body;
+    document.getElementById('modalOverlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePost() {
+    document.getElementById('modalOverlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('modalOverlay')) closePost();
+  }
+
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── MOBILE MENU ──
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  // Close mobile menu on outside click
+  document.addEventListener('click', function(e) {
+    const menu = document.getElementById('mobileMenu');
+    const hamburger = document.querySelector('.hamburger');
+    if (!menu.contains(e.target) && !hamburger.contains(e.target)) {
+      menu.classList.remove('open');
+    }
+  });
+
+  // ── KEYBOARD ESC to close modal ──
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closePost();
+  });
+</script>
+
+</body>
+</html>
