@@ -1,0 +1,48 @@
+backend:
+  name: github
+  repo: abhishekgit-hub/abhishekgit-hub.github.io  # ← CHANGE: your-github-username/your-repo-name
+  branch: main
+  base_url: https://abhishek-portfolio-oauth.netlify.app  # ← we'll set this up (free Netlify OAuth proxy)
+
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+collections:
+  - name: "projects"
+    label: "Projects"
+    file: "data/projects.json"
+    description: "Manage your portfolio projects"
+    fields:
+      - label: "Projects List"
+        name: "projects"
+        widget: "list"
+        fields:
+          - { label: "ID (no spaces, use dashes)", name: "id", widget: "string" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Icon (emoji)", name: "icon", widget: "string", default: "🚀" }
+          - label: "Tags"
+            name: "tags"
+            widget: "list"
+            field: { label: "Tag", name: "tag", widget: "string" }
+          - { label: "GitHub URL", name: "github", widget: "string", required: false }
+          - { label: "Live Demo URL", name: "live", widget: "string", required: false }
+          - { label: "Featured?", name: "featured", widget: "boolean", default: false }
+          - { label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD" }
+
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "data/posts"
+    create: true
+    slug: "{{slug}}"
+    description: "Write and manage your blog posts"
+    fields:
+      - { label: "ID", name: "id", widget: "string" }
+      - { label: "Title", name: "title", widget: "string" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["AI", "Tech News", "General", "Tutorial", "Personal"]
+      - { label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD" }
+      - { label: "Excerpt (short summary)", name: "excerpt", widget: "text" }
+      - { label: "Body", name: "body", widget: "markdown" }

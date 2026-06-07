@@ -1,0 +1,13 @@
+[
+  {
+    "id": "embedai-saas",
+    "title": "EmbedAI SaaS",
+    "description": "Plug-and-Play AI Chat Assistant and Widget for any business website — powered by Google Gemini. Businesses can embed an intelligent chatbot with zero backend setup on their end.",
+    "tags": ["Node.js", "React", "Gemini AI", "SaaS", "MongoDB"],
+    "github": "https://github.com/abhishekgit-hub/embedai-saas",
+    "live": "",
+    "icon": "🤖",
+    "featured": true,
+    "date": "2025-01-01"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "gemini-developer-friend",
+    "title": "Why Google Gemini is quietly becoming a developer's best friend",
+    "category": "AI",
+    "date": "2025-05-01",
+    "excerpt": "After building EmbedAI with the Gemini API, here's what surprised me about working with Google's AI platform day-to-day...",
+    "body": "After spending weeks building EmbedAI — a plug-and-play AI chat widget powered by Google Gemini — I came away with a surprisingly strong appreciation for Gemini's developer experience.\n\nMost of the AI buzz still centers around OpenAI's GPT series, but Gemini has been quietly improving. The API is clean, the rate limits on the free tier are generous for prototyping, and the multimodal capabilities are genuinely impressive once you start using them.\n\nWhat stood out most for me was the context window. For a chatbot use case, being able to pass large amounts of context about a business — their FAQs, product info, tone of voice — without worrying about hitting a limit was a huge deal.\n\nIf you're a developer building AI-integrated products and haven't tried Gemini yet, I'd genuinely recommend giving it a shot. It's especially useful if you're already in the Google Cloud ecosystem."
+  },
+  {
+    "id": "rise-of-ai-agents",
+    "title": "The rise of AI agents: what it means for developers like us",
+    "category": "Tech News",
+    "date": "2025-04-01",
+    "excerpt": "AI agents are everywhere now. But as a developer, the question isn't 'what are they' — it's 'what can I build with them?'...",
+    "body": "AI agents are everywhere in 2025. Every week there's a new framework, a new autonomous agent demo, and a new think-piece about whether agents will replace developers.\n\nHere's my take as someone building with AI daily: agents are a tool, not a replacement. And right now, they're a really exciting tool.\n\nThe most interesting shift I see is how agents are changing what it means to write software. Instead of writing code that does a thing, you're writing prompts and orchestration logic that tells an AI how to do a thing. The skill set is evolving.\n\nFor developers interested in staying ahead: start experimenting with agent frameworks like LangChain, AutoGen, or even just the raw function-calling APIs from OpenAI and Gemini. Build small, break things, learn fast. That's still the best strategy."
+  },
+  {
+    "id": "learning-to-code-nepal",
+    "title": "Learning to code in Nepal: resources that actually helped me",
+    "category": "General",
+    "date": "2025-03-01",
+    "excerpt": "Being a CS student in Nepal has its challenges. Here are the resources, communities, and habits that genuinely made a difference...",
+    "body": "Being a computer engineering student in Nepal comes with a unique set of challenges. Slow internet on bad days, fewer local communities around cutting-edge tech, and a curriculum that sometimes lags behind industry trends.\n\nBut honestly? It's also made me resourceful. Here's what actually helped me level up:\n\nYouTube above everything. Fireship, Traversy Media, The Primeagen — these channels taught me more practical web dev than most textbooks. Free, fast, and current.\n\nBuild something real. The biggest leap I made was building EmbedAI. Not a tutorial project — a real product. The problems you hit when building for production are different from anything a course will show you.\n\nGitHub is your portfolio. Start committing code early, even if it's messy. Employers and collaborators look at your GitHub before your CV.\n\nIf you're a student in Nepal (or anywhere with limited local resources), don't let that be your excuse. The internet is a great equalizer. Use it."
+  }
+]
