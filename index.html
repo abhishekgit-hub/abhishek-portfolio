@@ -5,7 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="description" content="Abhishek Chaudhary — Computer Engineering student, AI enthusiast, and web developer from Nepal."/>
   <title>Abhishek Chaudhary — Computer Engineer</title>
+  
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -444,13 +457,12 @@
     }
     @media (max-width: 480px) {
       .skills-wrapper { grid-template-columns: repeat(2, 1fr); }
-      .about-stats { grid-template-columns: repeat(2, 1fr); }
+      --about-stats { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body>
 
-<!-- ── NAVBAR ── -->
 <nav>
   <a href="#hero" class="nav-logo">AC<span>.</span></a>
   <ul class="nav-links">
@@ -475,7 +487,6 @@
   <a href="#contact"   onclick="toggleMenu()">Contact</a>
 </div>
 
-<!-- ── HERO ── -->
 <section id="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
@@ -511,7 +522,6 @@
 
 <hr class="divider">
 
-<!-- ── ABOUT ── -->
 <div class="section-wrap" id="about">
   <div class="section-label">About Me</div>
   <h2 class="section-title reveal">Who I Am</h2>
@@ -543,7 +553,6 @@
 
 <hr class="divider">
 
-<!-- ── SKILLS ── -->
 <div class="section-wrap" id="skills">
   <div class="section-label">Tech Stack</div>
   <h2 class="section-title reveal">Skills</h2>
@@ -551,7 +560,7 @@
     <div class="skill-pill"><span class="skill-icon">🟢</span>Node.js</div>
     <div class="skill-pill"><span class="skill-icon">⚛️</span>React</div>
     <div class="skill-pill"><span class="skill-icon">🐍</span>Python</div>
-    <div class="skill-pill"><span class="skill-icon">⚙️</span>C</div>
+    <div class="skill-pill"><span class="skill-icon">CN</span>C</div>
     <div class="skill-pill"><span class="skill-icon">➕</span>C++</div>
     <div class="skill-pill"><span class="skill-icon">🍃</span>MongoDB</div>
     <div class="skill-pill"><span class="skill-icon">🚂</span>Express.js</div>
@@ -563,11 +572,9 @@
 
 <hr class="divider">
 
-<!-- ── PROJECTS ── -->
 <div class="section-wrap" id="projects">
   <div class="section-label">Work</div>
   <h2 class="section-title reveal">Projects</h2>
-  <!-- Populated by main.js from data/projects.json -->
   <div class="projects-grid" id="projectsGrid">
     <div class="project-card" style="opacity:.4">
       <div class="project-card-header"><div class="project-icon">⏳</div></div>
@@ -579,7 +586,6 @@
 
 <hr class="divider">
 
-<!-- ── EDUCATION ── -->
 <div class="section-wrap" id="education">
   <div class="section-label">Background</div>
   <h2 class="section-title reveal">Education</h2>
@@ -601,11 +607,9 @@
 
 <hr class="divider">
 
-<!-- ── POSTS ── -->
 <div class="section-wrap" id="posts">
   <div class="section-label">Blog</div>
   <h2 class="section-title reveal">Posts</h2>
-  <!-- Populated by main.js from data/posts.json -->
   <div class="posts-grid" id="postsGrid">
     <div class="post-card" style="opacity:.4;cursor:default">
       <div class="post-meta"><span class="post-category">Loading</span></div>
@@ -617,7 +621,6 @@
 
 <hr class="divider">
 
-<!-- ── CONTACT ── -->
 <div class="section-wrap" id="contact">
   <div class="section-label">Say Hello</div>
   <h2 class="section-title reveal">Contact</h2>
@@ -651,7 +654,6 @@
   </div>
 </div>
 
-<!-- ── FOOTER ── -->
 <footer>
   <span>© 2025 Abhishek Chaudhary — Built with ❤️ from Nepal 🇳🇵</span>
   <span>
@@ -663,7 +665,6 @@
   </span>
 </footer>
 
-<!-- ── POST MODAL ── -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal">
     <button class="modal-close" onclick="closePost()">✕</button>
@@ -674,13 +675,11 @@
   </div>
 </div>
 
-<!-- ── EMBEDAI WIDGET ── Replace YOUR_API_KEY_HERE with your real key -->
 <script
   src="https://embedai-backend.onrender.com/widget.js"
   data-api-key="YOUR_API_KEY_HERE">
 </script>
 
-<!-- ── MAIN SCRIPT ── -->
 <script src="/assets/main.js"></script>
 
 </body>
