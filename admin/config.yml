@@ -6,35 +6,44 @@ media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
-  - name: "posts"
-    label: "Blog Posts"
-    folder: "data/posts" # Saves clean, separate files here
-    create: true
-    slug: "{{slug}}"
+  - name: "data_collection"
+    label: "Website Content"
     editor:
       preview: false
-    fields:
-      - { label: "ID / Slug", name: "id", widget: "string", hint: "e.g., how-i-built-an-ai-portfolio" }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "string" }
-      - { label: "Excerpt / Short Summary", name: "excerpt", widget: "text" }
-      - { label: "Body Content", name: "body", widget: "markdown" }
-      - { label: "Publish Date", name: "date", widget: "date", format: "YYYY-MM-DD" }
+    files:
+      - name: "posts_file"
+        label: "Blog Posts List"
+        file: "data/posts.json"
+        type: "json"
+        format: "json"
+        fields:
+          - label: "Posts Array"
+            name: "posts"
+            widget: "list"
+            fields:
+              - { label: "ID / Slug", name: "id", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Category", name: "category", widget: "string" }
+              - { label: "Short Summary", name: "excerpt", widget: "text" }
+              - { label: "Body Content", name: "body", widget: "markdown" }
+              - { label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD" }
 
-  - name: "projects"
-    label: "Projects"
-    folder: "data/projects" # Saves clean, separate files here
-    create: true
-    slug: "{{slug}}"
-    editor:
-      preview: false
-    fields:
-      - { label: "ID / Slug", name: "id", widget: "string" }
-      - { label: "Project Title", name: "title", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Tags / Technologies", name: "tags", widget: "list" }
-      - { label: "GitHub Repository Link", name: "github", widget: "string" }
-      - { label: "Live Deployment Link", name: "live", widget: "string" }
-      - { label: "Display Icon / Emoji", name: "icon", widget: "string" }
-      - { label: "Featured Project?", name: "featured", widget: "boolean" }
-      - { label: "Date Created", name: "date", widget: "date", format: "YYYY-MM-DD" }
+      - name: "projects_file"
+        label: "Projects List"
+        file: "data/projects.json"
+        type: "json"
+        format: "json"
+        fields:
+          - label: "Projects Array"
+            name: "projects"
+            widget: "list"
+            fields:
+              - { label: "ID / Slug", name: "id", widget: "string" }
+              - { label: "Project Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Tags", name: "tags", widget: "list" }
+              - { label: "GitHub Link", name: "github", widget: "string" }
+              - { label: "Live Link", name: "live", widget: "string" }
+              - { label: "Icon Emoji", name: "icon", widget: "string" }
+              - { label: "Featured?", name: "featured", widget: "boolean" }
+              - { label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD" }
