@@ -1,49 +1,32 @@
 backend:
   name: git-gateway
-  repo: abhishekgit-hub/abhishek-portfolio
   branch: main
-  site_domain: loquacious-gaufre-dedbf5.netlify.app
 
-media_folder: "assets/uploads"
-public_folder: "/assets/uploads"
+media_folder: "assets/img"
+public_folder: "/assets/img"
 
 collections:
-  - name: "projects"
-    label: "Projects"
+  - name: "blog"
+    label: "Blog Config"
+    delete: false # Prevents accidental structural deletions
+    editor:
+      preview: false
     files:
-      - name: "projects_list"
-        label: "Projects List"
-        file: "data/projects.json"
+      - name: "posts"
+        label: "Blog Posts"
+        file: "data/posts.json"
+        type: "json"
+        format: "json"
+        slug: "{{slug}}"
         fields:
-          - label: "Projects"
-            name: "projects"
+          - label: "Posts List"
+            name: "posts"
             widget: "list"
+            summary: "{{fields.title}}"
             fields:
-              - { label: "ID (no spaces, use dashes)", name: "id", widget: "string" }
+              - { label: "ID/Slug", name: "id", widget: "string", hint: "e.g., how-i-built-an-ai-portfolio" }
               - { label: "Title", name: "title", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Icon (emoji)", name: "icon", widget: "string", default: "🚀" }
-              - label: "Tags"
-                name: "tags"
-                widget: "list"
-                field: { label: "Tag", name: "tag", widget: "string" }
-              - { label: "GitHub URL", name: "github", widget: "string", required: false }
-              - { label: "Live Demo URL", name: "live", widget: "string", required: false }
-              - { label: "Featured?", name: "featured", widget: "boolean", default: false }
+              - { label: "Category", name: "category", widget: "string" }
+              - { label: "Excerpt / Short Summary", name: "excerpt", widget: "text" }
+              - { label: "Body Content", name: "body", widget: "markdown" }
               - { label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD" }
-
-  - name: "posts"
-    label: "Blog Posts"
-    folder: "data/posts"
-    create: true
-    slug: "{{slug}}"
-    fields:
-      - { label: "ID", name: "id", widget: "string" }
-      - { label: "Title", name: "title", widget: "string" }
-      - label: "Category"
-        name: "category"
-        widget: "select"
-        options: ["AI", "Tech News", "General", "Tutorial", "Personal"]
-      - { label: "Date", name: "date", widget: "date", format: "YYYY-MM-DD" }
-      - { label: "Excerpt (short summary)", name: "excerpt", widget: "text" }
-      - { label: "Body", name: "body", widget: "markdown" }
