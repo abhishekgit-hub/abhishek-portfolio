@@ -6,47 +6,35 @@ media_folder: "assets/img"
 public_folder: "/assets/img"
 
 collections:
-  - name: "blog_management"
-    label: "Website Blog"
-    format: "json" # <-- Fixes the Git Gateway configuration parsing error
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "data/posts" # Saves clean, separate files here
+    create: true
+    slug: "{{slug}}"
     editor:
       preview: false
-    files:
-      - name: "posts"
-        label: "Manage Blog Posts"
-        file: "data/posts.json"
-        fields:
-          - label: "All Posts"
-            name: "posts"
-            widget: "list"
-            fields:
-              - { label: "ID / Slug", name: "id", widget: "string" }
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Category", name: "category", widget: "string" }
-              - { label: "Excerpt Summary", name: "excerpt", widget: "text" }
-              - { label: "Body Content", name: "body", widget: "markdown" }
-              - { label: "Publish Date", name: "date", widget: "date", format: "YYYY-MM-DD" }
+    fields:
+      - { label: "ID / Slug", name: "id", widget: "string", hint: "e.g., how-i-built-an-ai-portfolio" }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Excerpt / Short Summary", name: "excerpt", widget: "text" }
+      - { label: "Body Content", name: "body", widget: "markdown" }
+      - { label: "Publish Date", name: "date", widget: "date", format: "YYYY-MM-DD" }
 
-  - name: "projects_management"
-    label: "Website Projects"
-    format: "json" # <-- Fixes the Git Gateway configuration parsing error
+  - name: "projects"
+    label: "Projects"
+    folder: "data/projects" # Saves clean, separate files here
+    create: true
+    slug: "{{slug}}"
     editor:
       preview: false
-    files:
-      - name: "projects"
-        label: "Manage Projects"
-        file: "data/projects.json"
-        fields:
-          - label: "All Projects"
-            name: "projects"
-            widget: "list"
-            fields:
-              - { label: "ID / Slug", name: "id", widget: "string" }
-              - { label: "Project Title", name: "title", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Tags / Technologies", name: "tags", widget: "list" }
-              - { label: "GitHub Repository Link", name: "github", widget: "string" }
-              - { label: "Live Deployment Link", name: "live", widget: "string" }
-              - { label: "Display Icon / Emoji", name: "icon", widget: "string" }
-              - { label: "Featured Project?", name: "featured", widget: "boolean" }
-              - { label: "Date Created", name: "date", widget: "date", format: "YYYY-MM-DD" }
+    fields:
+      - { label: "ID / Slug", name: "id", widget: "string" }
+      - { label: "Project Title", name: "title", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Tags / Technologies", name: "tags", widget: "list" }
+      - { label: "GitHub Repository Link", name: "github", widget: "string" }
+      - { label: "Live Deployment Link", name: "live", widget: "string" }
+      - { label: "Display Icon / Emoji", name: "icon", widget: "string" }
+      - { label: "Featured Project?", name: "featured", widget: "boolean" }
+      - { label: "Date Created", name: "date", widget: "date", format: "YYYY-MM-DD" }
