@@ -1,8 +1,8 @@
 backend:
-  name: github
-  repo: abhishekgit-hub/abhishekgit-hub.github.io  # ← CHANGE: your-github-username/your-repo-name
+  name: git-gateway
+  repo: abhishekgit-hub/abhishek-portfolio
   branch: main
-  base_url: https://abhishek-portfolio-oauth.netlify.app  # ← we'll set this up (free Netlify OAuth proxy)
+  site_domain: loquacious-gaufre-dedbf5.netlify.app
 
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
