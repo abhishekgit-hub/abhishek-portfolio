@@ -1,9 +1,41 @@
+// ═══════════════════════════════════════════════
+//   ABHISHEK CHAUDHARY — PORTFOLIO MAIN SCRIPT
+// ═══════════════════════════════════════════════
 
-// ═══════════════════════════════════════════════
-//  ABHISHEK CHAUDHARY — PORTFOLIO MAIN SCRIPT
-// ═══════════════════════════════════════════════
- 
-// ── FALLBACK DATA (shown immediately, even on file://) ──
+// CONFIGURATION: Replace with your exact GitHub username and repo name
+const GH_USER = "abhishekgit-hub";
+const GH_REPO = "abhishek-portfolio";
+
+// Helper to convert Raw Markdown frontmatter metadata to JS Objects
+function parseMarkdownFile(mdText) {
+  const frontmatterRegex = /^---\r?\n([\s\S]*?)\r?\n---/;
+  const match = mdText.match(frontmatterRegex);
+  const result = { body: mdText.replace(frontmatterRegex, '').trim() };
+  
+  if (match && match[1]) {
+    match[1].split('\n').forEach(line => {
+      const parts = line.split(':');
+      if (parts.length >= 2) {
+        const key = parts[0].trim();
+        let value = parts.slice(1).join(':').trim();
+        // Remove surrounding quotes if present
+        if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+          value = value.substring(1, value.length - 1);
+        }
+        // Handle explicit boolean tags
+        if (value === 'true') value = true;
+        if (value === 'false') value = false;
+        // Handle tags list array string conversion [A, B, C]
+        if (key === 'tags' && value.startsWith('[') && value.endsWith(']')) {
+          value = value.substring(1, value.length - 1).split(',').map(t => t.trim().replace(/['"']/g, ''));
+        }
+        result[key] = value;
+      });
+  }
+  return result;
+}
+
+// ── FALLBACK DATA (shown instantly as a placeholder) ──
 const FALLBACK_PROJECTS = [
   {
     id: "embedai-saas",
@@ -11,24 +43,13 @@ const FALLBACK_PROJECTS = [
     description: "Plug-and-Play AI Chat Assistant and Widget for any business website — powered by Google Gemini. Businesses can embed an intelligent chatbot with zero backend setup on their end.",
     tags: ["Node.js", "React", "Gemini AI", "SaaS", "MongoDB"],
     github: "https://github.com/abhishekgit-hub/embedai-saas",
-    live: "",
+    live: "https://bizqueryai.abhishekh-chaudhary.com.np/",
     icon: "🤖",
     featured: true,
     date: "2025-01-01"
-  },
-  {
-    id: "more-github",
-    title: "More on GitHub →",
-    description: "Check out my GitHub profile for more projects, experiments, and open-source contributions. I'm always building something new.",
-    tags: ["Open Source", "Experiments"],
-    github: "https://github.com/abhishekgit-hub",
-    live: "",
-    icon: "🌐",
-    featured: false,
-    date: "2025-01-01"
   }
 ];
- 
+
 const FALLBACK_POSTS = [
   {
     id: "gemini-developer-friend",
@@ -36,38 +57,22 @@ const FALLBACK_POSTS = [
     category: "AI",
     date: "2025-05-01",
     excerpt: "After building EmbedAI with the Gemini API, here's what surprised me about working with Google's AI platform day-to-day...",
-    body: "After spending weeks building EmbedAI — a plug-and-play AI chat widget powered by Google Gemini — I came away with a surprisingly strong appreciation for Gemini's developer experience.\n\nMost of the AI buzz still centers around OpenAI's GPT series, but Gemini has been quietly improving. The API is clean, the rate limits on the free tier are generous for prototyping, and the multimodal capabilities are genuinely impressive once you start using them.\n\nWhat stood out most for me was the context window. For a chatbot use case, being able to pass large amounts of context about a business — their FAQs, product info, tone of voice — without worrying about hitting a limit was a huge deal.\n\nIf you're a developer building AI-integrated products and haven't tried Gemini yet, I'd genuinely recommend giving it a shot. It's especially useful if you're already in the Google Cloud ecosystem."
-  },
-  {
-    id: "rise-of-ai-agents",
-    title: "The rise of AI agents: what it means for developers like us",
-    category: "Tech News",
-    date: "2025-04-01",
-    excerpt: "AI agents are everywhere now. But as a developer, the question isn't 'what are they' — it's 'what can I build with them?'...",
-    body: "AI agents are everywhere in 2025. Every week there's a new framework, a new autonomous agent demo, and a new think-piece about whether agents will replace developers.\n\nHere's my take as someone building with AI daily: agents are a tool, not a replacement. And right now, they're a really exciting tool.\n\nThe most interesting shift I see is how agents are changing what it means to write software. Instead of writing code that does a thing, you're writing prompts and orchestration logic that tells an AI how to do a thing. The skill set is evolving.\n\nFor developers interested in staying ahead: start experimenting with agent frameworks like LangChain, AutoGen, or even just the raw function-calling APIs from OpenAI and Gemini. Build small, break things, learn fast. That's still the best strategy."
-  },
-  {
-    id: "learning-to-code-nepal",
-    title: "Learning to code in Nepal: resources that actually helped me",
-    category: "General",
-    date: "2025-03-01",
-    excerpt: "Being a CS student in Nepal has its challenges. Here are the resources, communities, and habits that genuinely made a difference...",
-    body: "Being a computer engineering student in Nepal comes with a unique set of challenges. Slow internet on bad days, fewer local communities around cutting-edge tech, and a curriculum that sometimes lags behind industry trends.\n\nBut honestly? It's also made me resourceful. Here's what actually helped me level up:\n\nYouTube above everything. Fireship, Traversy Media, The Primeagen — these channels taught me more practical web dev than most textbooks. Free, fast, and current.\n\nBuild something real. The biggest leap I made was building EmbedAI. Not a tutorial project — a real product. The problems you hit when building for production are different from anything a course will show you.\n\nGitHub is your portfolio. Start committing code early, even if it's messy. Employers and collaborators look at your GitHub before your CV.\n\nIf you're a student in Nepal (or anywhere with limited local resources), don't let that be your excuse. The internet is a great equalizer. Use it."
+    body: "After spending weeks building EmbedAI — a plug-and-play AI chat widget powered by Google Gemini — I came away with a surprisingly strong appreciation for Gemini's developer experience..."
   }
 ];
- 
+
 // ── FORMAT DATE ──
 function formatDate(dateStr) {
   if (!dateStr) return '';
   const d = new Date(dateStr);
   return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
 }
- 
+
 // ── RENDER PROJECTS ──
 function renderProjects(projects) {
   const grid = document.getElementById('projectsGrid');
   if (!grid || !projects || projects.length === 0) return;
- 
+
   grid.innerHTML = projects.map(p => `
     <div class="project-card reveal">
       <div class="project-card-header">
@@ -90,32 +95,32 @@ function renderProjects(projects) {
       </div>
     </div>
   `).join('');
- 
+
   observeReveal();
 }
- 
+
 // ── RENDER POSTS ──
 function renderPosts(posts) {
   const grid = document.getElementById('postsGrid');
   if (!grid || !posts || posts.length === 0) return;
- 
-  window._posts = posts;
- 
-  grid.innerHTML = posts.map((p, i) => `
+
+  window._posts = posts.sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+  grid.innerHTML = window._posts.map((p, i) => `
     <div class="post-card reveal" onclick="openPost(${i})">
       <div class="post-meta">
         <span class="post-category">${p.category || 'General'}</span>
         <span class="post-date">${formatDate(p.date)}</span>
       </div>
       <h3 class="post-title">${p.title}</h3>
-      <p class="post-excerpt">${p.excerpt}</p>
+      <p class="post-excerpt">${p.excerpt || (p.body ? p.body.substring(0, 120) + '...' : '')}</p>
       <span class="post-read-more">Read more →</span>
     </div>
   `).join('');
- 
+
   observeReveal();
 }
- 
+
 // ── POST MODAL ──
 function openPost(index) {
   const post = window._posts[index];
@@ -123,6 +128,7 @@ function openPost(index) {
   document.getElementById('modalCategory').textContent = post.category || 'General';
   document.getElementById('modalTitle').textContent = post.title;
   document.getElementById('modalDate').textContent = formatDate(post.date);
+  
   const bodyHtml = (post.body || '')
     .split(/\n\n+/)
     .filter(p => p.trim())
@@ -132,16 +138,16 @@ function openPost(index) {
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
- 
+
 function closePost() {
   document.getElementById('modalOverlay').classList.remove('open');
   document.body.style.overflow = '';
 }
- 
+
 function closeModal(e) {
   if (e.target === document.getElementById('modalOverlay')) closePost();
 }
- 
+
 // ── SCROLL REVEAL ──
 function observeReveal() {
   const observer = new IntersectionObserver((entries) => {
@@ -151,7 +157,7 @@ function observeReveal() {
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
 }
- 
+
 // ── MOBILE MENU ──
 function toggleMenu() {
   document.getElementById('mobileMenu').classList.toggle('open');
@@ -163,37 +169,48 @@ document.addEventListener('click', function(e) {
     menu.classList.remove('open');
   }
 });
- 
-// ── ESC to close modal ──
+
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closePost(); });
- 
+
+// ── FETCH COLLECTION DATA DIRECTLY VIA GITHUB REPO API ──
+async function fetchFolderCollection(folderPath) {
+  const apiUrl = `https://api.github.com/repos/${GH_USER}/${GH_REPO}/contents/${folderPath}`;
+  const res = await fetch(apiUrl);
+  if (!res.ok) return [];
+  const filesList = await res.json();
+  
+  // Filter for valid markdown configuration files
+  const mdFiles = filesList.filter(file => file.name.endsWith('.md'));
+  
+  const items = await Promise.all(mdFiles.map(async (file) => {
+    const fileRes = await fetch(file.download_url);
+    const mdText = await fileRes.text();
+    return parseMarkdownFile(mdText);
+  }));
+  
+  return items;
+}
+
 // ── INIT ──
 document.addEventListener('DOMContentLoaded', async () => {
   observeReveal();
- 
-  // Show fallback data immediately so the page is never empty
+
+  // Show static layout placeholders immediately 
   renderProjects(FALLBACK_PROJECTS);
   renderPosts(FALLBACK_POSTS);
- 
-  // Then try to fetch live JSON (works on GitHub Pages / any server)
-  // If fetch fails (e.g. file:// protocol), fallback data stays — no problem
+
   if (location.protocol !== 'file:') {
     try {
-      const [projRes, postsRes] = await Promise.all([
-        fetch('data/projects.json'),
-        fetch('data/posts.json')
+      // Pull structural models dynamically from Decap CMS generation directories
+      const [livePosts, liveProjects] = await Promise.all([
+        fetchFolderCollection('data/posts'),
+        fetchFolderCollection('data/projects')
       ]);
-      if (projRes.ok) {
-        const projects = await projRes.json();
-        if (projects.length) renderProjects(projects);
-      }
-      if (postsRes.ok) {
-        const posts = await postsRes.json();
-        if (posts.length) renderPosts(posts);
-      }
+
+      if (liveProjects.length > 0) renderProjects(liveProjects);
+      if (livePosts.length > 0) renderPosts(livePosts);
     } catch (e) {
-      // fetch failed — fallback data already shown, nothing to do
-      console.info('Running without server — showing built-in content.');
+      console.info('Failed loading live folder collections, displaying local system values.', e);
     }
   }
 });
