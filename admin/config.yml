@@ -8,15 +8,14 @@ media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
 collections:
-  - name: "portfolio_data"
-    label: "Projects Data"
-    description: "Manage your portfolio projects"
+  - name: "projects"
+    label: "Projects"
     files:
-      - name: "projects"
+      - name: "projects_list"
         label: "Projects List"
         file: "data/projects.json"
         fields:
-          - label: "Projects List"
+          - label: "Projects"
             name: "projects"
             widget: "list"
             fields:
@@ -38,7 +37,6 @@ collections:
     folder: "data/posts"
     create: true
     slug: "{{slug}}"
-    description: "Write and manage your blog posts"
     fields:
       - { label: "ID", name: "id", widget: "string" }
       - { label: "Title", name: "title", widget: "string" }
