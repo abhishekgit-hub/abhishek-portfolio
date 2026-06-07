@@ -1,6 +1,7 @@
 backend:
-  name: git-gateway
+  name: github
   branch: main
+  repo: abhishekgit-hub/abhishek-portfolio
 
 media_folder: "assets/img"
 public_folder: "/assets/img"
